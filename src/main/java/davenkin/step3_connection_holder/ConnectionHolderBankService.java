@@ -2,17 +2,15 @@ package davenkin.step3_connection_holder;
 
 import davenkin.BankService;
 
-import javax.sql.DataSource;
-
 public class ConnectionHolderBankService implements BankService {
     private TransactionManager transactionManager;
     private ConnectionHolderBankDao connectionHolderBankDao;
     private ConnectionHolderInsuranceDao connectionHolderInsuranceDao;
 
-    public ConnectionHolderBankService(DataSource dataSource) {
-        transactionManager = new TransactionManager(dataSource);
-        connectionHolderBankDao = new ConnectionHolderBankDao(dataSource);
-        connectionHolderInsuranceDao = new ConnectionHolderInsuranceDao(dataSource);
+    public ConnectionHolderBankService() {
+        transactionManager = new TransactionManager();
+        connectionHolderBankDao = new ConnectionHolderBankDao();
+        connectionHolderInsuranceDao = new ConnectionHolderInsuranceDao();
 
     }
 

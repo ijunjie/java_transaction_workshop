@@ -7,12 +7,10 @@ import java.sql.SQLException;
 
 import static junit.framework.Assert.assertEquals;
 
-public class TransactionTemplateBankServiceTest extends BankFixture
-{
+public class TransactionTemplateBankServiceTest extends BankFixture {
     @Test
-    public void transferSuccess() throws SQLException
-    {
-        TransactionTemplateBankService transactionTemplateBankService = new TransactionTemplateBankService(dataSource);
+    public void transferSuccess() throws SQLException {
+        TransactionTemplateBankService transactionTemplateBankService = new TransactionTemplateBankService();
         transactionTemplateBankService.transfer(1111, 2222, 200);
 
         assertEquals(800, getBankAmount(1111));
@@ -21,9 +19,8 @@ public class TransactionTemplateBankServiceTest extends BankFixture
     }
 
     @Test
-    public void transferFailure() throws SQLException
-    {
-        TransactionTemplateBankService transactionTemplateBankService = new TransactionTemplateBankService(dataSource);
+    public void transferFailure() throws SQLException {
+        TransactionTemplateBankService transactionTemplateBankService = new TransactionTemplateBankService();
 
         int toNonExistId = 3333;
         transactionTemplateBankService.transfer(1111, toNonExistId, 200);

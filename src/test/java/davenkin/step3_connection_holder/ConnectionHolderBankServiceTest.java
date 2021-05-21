@@ -11,7 +11,7 @@ public class ConnectionHolderBankServiceTest extends BankFixture {
 
     @Test
     public void transferSuccess() throws SQLException {
-        ConnectionHolderBankService connectionHolderBankService = new ConnectionHolderBankService(dataSource);
+        ConnectionHolderBankService connectionHolderBankService = new ConnectionHolderBankService();
         connectionHolderBankService.transfer(1111, 2222, 200);
 
         assertEquals(800, getBankAmount(1111));
@@ -21,7 +21,7 @@ public class ConnectionHolderBankServiceTest extends BankFixture {
 
     @Test
     public void transferFailure() throws SQLException {
-        ConnectionHolderBankService connectionHolderBankService = new ConnectionHolderBankService(dataSource);
+        ConnectionHolderBankService connectionHolderBankService = new ConnectionHolderBankService();
 
         int toNonExistId = 3333;
         connectionHolderBankService.transfer(1111, toNonExistId, 200);

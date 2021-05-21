@@ -1,30 +1,30 @@
 package davenkin.step3_connection_holder;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class TransactionManager {
-    private DataSource dataSource;
 
-    public TransactionManager(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public TransactionManager() {
     }
 
     public final void start() throws SQLException {
-        Connection connection = getConnection();
+        System.out.println(">>>>>>>>>>start transaction...");
+        Connection connection = CurrentThreadConnectionHolder.getConnection();
         connection.setAutoCommit(false);
     }
 
     public final void commit() throws SQLException {
-        Connection connection = getConnection();
+        System.out.println(">>>>>>>>>>>>>>>start commit...");
+        Connection connection = CurrentThreadConnectionHolder.getConnection();
         connection.commit();
     }
 
     public final void rollback() {
+        System.out.println(">>>>>>>>>>>>>>start rollback");
         Connection connection = null;
         try {
-            connection = getConnection();
+            connection = CurrentThreadConnectionHolder.getConnection();
             connection.rollback();
 
         } catch (SQLException e) {
@@ -33,20 +33,17 @@ public class TransactionManager {
     }
 
     public final void close() {
+        System.out.println(">>>>>>>>>>>>>start close...");
         Connection connection = null;
         try {
-            connection = getConnection();
+            connection = CurrentThreadConnectionHolder.getConnection();
             connection.setAutoCommit(true);
             connection.setReadOnly(false);
             connection.close();
-            SingleThreadConnectionHolder.removeConnection(dataSource);
-            SingleThreadConnectionHolder.remove();
+            CurrentThreadConnectionHolder.removeConnection();
         } catch (SQLException e) {
             throw new RuntimeException("Couldn't close connection[" + connection + "].", e);
         }
     }
 
-    private Connection getConnection() throws SQLException {
-        return SingleThreadConnectionHolder.getConnection(dataSource);
-    }
 }

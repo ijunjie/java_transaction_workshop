@@ -1,6 +1,5 @@
 package davenkin.step3_connection_holder;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,17 +12,13 @@ import java.sql.SQLException;
  * Time: 8:20 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ConnectionHolderInsuranceDao
-{
-    private DataSource dataSource;
+public class ConnectionHolderInsuranceDao {
 
-    public ConnectionHolderInsuranceDao(DataSource dataSource)
-    {
-        this.dataSource = dataSource;
+    public ConnectionHolderInsuranceDao() {
     }
 
     public void deposit(int insuranceId, int amount) throws SQLException {
-        Connection connection = SingleThreadConnectionHolder.getConnection(dataSource);
+        Connection connection = CurrentThreadConnectionHolder.getConnection();
         PreparedStatement selectStatement = connection.prepareStatement("SELECT INSURANCE_AMOUNT FROM INSURANCE_ACCOUNT WHERE INSURANCE_ID = ?");
         selectStatement.setInt(1, insuranceId);
         ResultSet resultSet = selectStatement.executeQuery();

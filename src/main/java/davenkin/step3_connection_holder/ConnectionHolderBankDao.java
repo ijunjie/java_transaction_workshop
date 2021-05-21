@@ -1,6 +1,5 @@
 package davenkin.step3_connection_holder;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,14 +13,12 @@ import java.sql.SQLException;
  * To change this template use File | Settings | File Templates.
  */
 public class ConnectionHolderBankDao {
-    private DataSource dataSource;
 
-    public ConnectionHolderBankDao(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public ConnectionHolderBankDao() {
     }
 
     public void withdraw(int bankId, int amount) throws SQLException {
-        Connection connection = SingleThreadConnectionHolder.getConnection(dataSource);
+        Connection connection = CurrentThreadConnectionHolder.getConnection();
         PreparedStatement selectStatement = connection.prepareStatement("SELECT BANK_AMOUNT FROM BANK_ACCOUNT WHERE BANK_ID = ?");
         selectStatement.setInt(1, bankId);
         ResultSet resultSet = selectStatement.executeQuery();

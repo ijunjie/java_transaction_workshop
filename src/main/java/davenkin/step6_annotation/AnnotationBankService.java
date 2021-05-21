@@ -13,8 +13,8 @@ public class AnnotationBankService implements BankService
 
     public AnnotationBankService(DataSource dataSource)
     {
-        connectionHolderBankDao = new ConnectionHolderBankDao(dataSource);
-        connectionHolderInsuranceDao = new ConnectionHolderInsuranceDao(dataSource);
+        connectionHolderBankDao = new ConnectionHolderBankDao();
+        connectionHolderInsuranceDao = new ConnectionHolderInsuranceDao();
     }
 
     @Transactional

@@ -9,12 +9,10 @@ import java.sql.SQLException;
 
 import static junit.framework.Assert.assertEquals;
 
-public class AnnotationBankServiceTest extends BankFixture
-{
+public class AnnotationBankServiceTest extends BankFixture {
     @Test
-    public void transferSuccess() throws SQLException
-    {
-        TransactionManager transactionManager = new TransactionManager(dataSource);
+    public void transferSuccess() throws SQLException {
+        TransactionManager transactionManager = new TransactionManager();
         TransactionEnabledAnnotationProxyManager transactionEnabledProxyManager = new TransactionEnabledAnnotationProxyManager(transactionManager);
         BankService bankService = new AnnotationBankService(dataSource);
         BankService proxyBankService = (BankService) transactionEnabledProxyManager.proxyFor(bankService);
@@ -25,9 +23,8 @@ public class AnnotationBankServiceTest extends BankFixture
     }
 
     @Test
-    public void transferFailure() throws SQLException
-    {
-        TransactionEnabledAnnotationProxyManager transactionEnabledAnnotationProxyManager = new TransactionEnabledAnnotationProxyManager(new TransactionManager(dataSource));
+    public void transferFailure() throws SQLException {
+        TransactionEnabledAnnotationProxyManager transactionEnabledAnnotationProxyManager = new TransactionEnabledAnnotationProxyManager(new TransactionManager());
         BankService bankService = new AnnotationBankService(dataSource);
         BankService proxyBankService = (BankService) transactionEnabledAnnotationProxyManager.proxyFor(bankService);
 
