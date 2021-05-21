@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +24,7 @@ public class FailureBankDao {
 
     public void withdraw(int bankId, int amount) throws SQLException {
         Connection connection = dataSource.getConnection();
+        System.out.println(">>>>>>withdraw connection: " + Objects.hashCode(connection));
         PreparedStatement selectStatement = connection.prepareStatement("SELECT BANK_AMOUNT FROM BANK_ACCOUNT WHERE BANK_ID = ?");
         selectStatement.setInt(1, bankId);
         ResultSet resultSet = selectStatement.executeQuery();

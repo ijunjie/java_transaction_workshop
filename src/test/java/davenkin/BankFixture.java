@@ -3,7 +3,11 @@ package davenkin;
 import org.junit.Before;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,14 +16,12 @@ import java.sql.*;
  * Time: 10:16 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BankFixture
-{
+public class BankFixture {
 
     protected final DataSource dataSource = DataSourceFactory.createDataSource();
 
     @Before
-    public void setUp() throws SQLException
-    {
+    public void setUp() throws SQLException {
         Connection connection = dataSource.getConnection();
         Statement statement = connection.createStatement();
 
@@ -44,8 +46,7 @@ public class BankFixture
         connection.close();
     }
 
-    protected int getBankAmount(int bankId) throws SQLException
-    {
+    protected int getBankAmount(int bankId) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement selectStatement = connection.prepareStatement("SELECT BANK_AMOUNT FROM BANK_ACCOUNT WHERE BANK_ID = ?");
         selectStatement.setInt(1, bankId);
@@ -58,8 +59,7 @@ public class BankFixture
         return amount;
     }
 
-    protected int getInsuranceAmount(int insuranceId) throws SQLException
-    {
+    protected int getInsuranceAmount(int insuranceId) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement selectStatement = connection.prepareStatement("SELECT INSURANCE_AMOUNT FROM INSURANCE_ACCOUNT WHERE INSURANCE_ID = ?");
         selectStatement.setInt(1, insuranceId);

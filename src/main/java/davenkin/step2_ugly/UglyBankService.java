@@ -33,6 +33,7 @@ public class UglyBankService implements BankService {
 
             connection.commit();
         } catch (Exception e) {
+            //e.printStackTrace();
             try {
                 assert connection != null;
                 connection.rollback();

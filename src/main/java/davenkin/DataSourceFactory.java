@@ -12,21 +12,19 @@ import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
 
-public class DataSourceFactory
-{
+public class DataSourceFactory {
 
-    private static final BasicDataSource dataSource = new BasicDataSource();
+    private static final BasicDataSource dataSource;
 
-    static
-    {
+    static {
+        dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
         dataSource.setUsername("SA");
         dataSource.setPassword("");
         dataSource.setUrl("jdbc:hsqldb:mem:bank");
     }
 
-    public static DataSource createDataSource()
-    {
+    public static DataSource createDataSource() {
         return dataSource;
     }
 }

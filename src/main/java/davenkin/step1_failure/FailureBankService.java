@@ -5,6 +5,7 @@ import davenkin.BankService;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,6 +27,7 @@ public class FailureBankService implements BankService{
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
+            System.out.println(">>>>>>>>>> trasfer connection: " + Objects.hashCode(connection));
             connection.setAutoCommit(false);
 
             failureBankDao.withdraw(fromId, amount);
@@ -33,11 +35,12 @@ public class FailureBankService implements BankService{
 
             connection.commit();
         } catch (Exception e) {
+            e.printStackTrace();
             try {
                 assert connection != null;
                 connection.rollback();
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                System.out.println(e1);
             }
         } finally {
             try

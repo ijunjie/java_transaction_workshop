@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,11 +23,13 @@ public class FailureInsuranceDao {
 
     public void deposit(int insuranceId, int amount) throws SQLException {
         Connection connection = dataSource.getConnection();
+        System.out.println(">>>>>>deposit connection: " + Objects.hashCode(connection));
         PreparedStatement selectStatement = connection.prepareStatement("SELECT INSURANCE_AMOUNT FROM INSURANCE_ACCOUNT WHERE INSURANCE_ID = ?");
         selectStatement.setInt(1, insuranceId);
         ResultSet resultSet = selectStatement.executeQuery();
+        System.out.println(resultSet);
         resultSet.next();
-        int previousAmount = resultSet.getInt(1);
+        int previousAmount = resultSet.getInt(1); // 此处可能异常
         resultSet.close();
         selectStatement.close();
 
