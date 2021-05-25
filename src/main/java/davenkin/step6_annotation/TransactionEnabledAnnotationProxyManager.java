@@ -15,7 +15,9 @@ public class TransactionEnabledAnnotationProxyManager {
     }
 
     public Object proxyFor(Object object) {
-        return Proxy.newProxyInstance(object.getClass().getClassLoader(), object.getClass().getInterfaces(), new AnnotationTransactionInvocationHandler(object, transactionManager));
+        return Proxy.newProxyInstance(object.getClass().getClassLoader(),
+                object.getClass().getInterfaces(),
+                new AnnotationTransactionInvocationHandler(object, transactionManager));
     }
 }
 
